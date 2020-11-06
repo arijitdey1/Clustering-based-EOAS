@@ -1,0 +1,5 @@
+We are very sorry for the inconvenience. Here we added the repository details.
+1. The initial stage is feature extraction. We have used LPC and LPCC feature extraction technique. The file named LPC.py and LPCC.py consist of the codes for the feature extraction.
+2. The second stage is Feature selection. For FS task we have used clustering instead of random population generation. The code of clustering is in the file named Clustering.py
+3. The third stage is to use of Atom search optimization algorithm and Equilibrium optimization. The code of those two optimization algorithm is in the file named ASO.py and EO.py
+4. The final stage is AWCM and SOPF and code of this stage is in the file AWCM.py

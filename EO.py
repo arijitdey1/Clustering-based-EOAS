@@ -269,26 +269,6 @@ label = np.asarray(label)
 print(a,b)
 dimension = np.shape(data)[1] #particle dimension
 
-f = '/content/drive/My Drive/HErlev_GoogLeNet_b_original_.csv'
-dataframe = pd.read_csv(f)
-#df= pd.read_csv('F:/ND sirs project/ALL DATASETS/HErlev/HErlev_Class.csv')
-f= open(f,'r')
-reader = csv.reader(f)
-labels = next(reader)
-
-f = '/content/drive/My Drive/HErlev_ResNet18_b_original_.csv'
-dataframe2 = pd.read_csv(f)
-f= open(f,'r')
-reader = csv.reader(f)
-labels2 = next(reader)
-
-dataframe[labels2]= dataframe2
-labels += labels2
-data = dataframe
-data = np.asarray(data)
-(a,b)=np.shape(data)
-print(a,b)
-dimension = np.shape(data)[1]
 #===============================================================================================================
 from numpy import array
 from sklearn.model_selection import KFold

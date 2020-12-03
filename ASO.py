@@ -10,46 +10,15 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 import csv
 
-url='https://raw.githubusercontent.com/Rangerix/feat/master/arrythmia.csv'
-url='https://raw.githubusercontent.com/Rangerix/MicroArrayDatasets/master/lung.csv'
-url='https://raw.githubusercontent.com/Rangerix/feat/master/spect.csv'
-'''
-df=pd.read_csv(url)
-(a,b)=np.shape(df)
-print(a,b)
-data = df.values[:,0:b-1]
-label = df.values[:,b-1]
-'''
 
-data = pd.read_csv('/content/drive/My Drive/HErlev_GoogLeNet_b_original_.csv')
-label = pd.read_csv('/content/drive/My Drive/HErlev_Class.csv')
+data = pd.read_csv('/content/drive/MyDrive/feature_extraced_savee_dataset.csv')
+label = pd.read_csv('/content/drive/MyDrive/class.csv')
 data = np.asarray(data)
-label = label['Class']
+label = label['class']
 label = np.asarray(label)
 (a,b)=np.shape(data)
 print(a,b)
 dimension = np.shape(data)[1] #particle dimension
-
-f = '/content/drive/My Drive/HErlev_GoogLeNet_b_original_.csv'
-dataframe = pd.read_csv(f)
-#df= pd.read_csv('F:/ND sirs project/ALL DATASETS/HErlev/HErlev_Class.csv')
-f= open(f,'r')
-reader = csv.reader(f)
-labels = next(reader)
-
-f = '/content/drive/My Drive/HErlev_ResNet18_b_original_.csv'
-dataframe2 = pd.read_csv(f)
-f= open(f,'r')
-reader = csv.reader(f)
-labels2 = next(reader)
-
-dataframe[labels2]= dataframe2
-labels += labels2
-data = dataframe
-data = np.asarray(data)
-(a,b)=np.shape(data)
-print(a,b)
-dimension = np.shape(data)[1]
 
 # trainX=data
 # trainy=label

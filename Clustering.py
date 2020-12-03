@@ -88,6 +88,22 @@ for j in range(n_clusters):
   
   clusters_population.append(temp_cluster)
   cluster_similarities.append(temp_similarity)
+beta = 0.3
+cluster_similarity = []
+for i in range(len(new_population)):
+  new_sol = new_population[i]
+  acc_sol = fitness(new_sol, data_inputs, data_outputs, 0.5)
+  similarity_list = []
+  for j in range(len(cluster_centres)):
+    print('Population: ', i)
+    print('Cluster: ', j)
+    C_cluster = cluster_centres[j]
+    acc_cluster = fitness(C_cluster, data_inputs, data_outputs, 0.5)
+    H_distance = hamming_distance(C_cluster, new_sol)
+    Similarity_score = similarity(beta, H_distance, acc_sol, acc_cluster)
+    similarity_list.append(Similarity_score)
+    print('Similarity_score: ', Similarity_score)
+  cluster_similarity.append(similarity_list)
   
   weighted_solution = []
 for i in range(n_clusters):
@@ -126,3 +142,5 @@ for i in range(len(h_d_thresh)):
     else:
       final_solution.append(0)
   final_population.append(final_solution)
+  initial_pop_from_cluster = pd.DataFrame(final_population)
+  initial_pop_from_cluster.to_csv('initial_population.csv')

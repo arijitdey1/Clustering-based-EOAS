@@ -260,8 +260,8 @@ best_no_features = -1
 accuracy_list = []
             
 
-data = pd.read_csv('/content/drive/My Drive/HErlev_GoogLeNet_b_original_.csv')
-label = pd.read_csv('/content/drive/My Drive/HErlev_Class.csv')
+data = pd.read_csv('/content/drive/MyDrive/feature_extraced_savee_dataset.csv')
+label = pd.read_csv(''/content/drive/MyDrive/class.csv')
 data = np.asarray(data)
 label = label['Class']
 label = np.asarray(label)

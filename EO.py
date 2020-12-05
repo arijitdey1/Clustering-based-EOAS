@@ -40,6 +40,7 @@ def fitness(particle):
 	test_data=testX[:,cols]
 	clf.fit(train_data,trainy)
 	val=1-clf.score(test_data,testy)
+	#print('particle: ',particle)
 
 	#in case of multi objective  []
 	set_cnt=sum(particle)
@@ -80,7 +81,7 @@ def initialize(partCount,dim):
 		for j in pos:
 			population[i][j]=1
 		
-		# print(population[i])  
+		#print(population[i])  
 		
 	return population
 
@@ -129,7 +130,10 @@ def SA(population,accList):
 	[partCount,numFeatures] = np.shape(population)
 	T0 = numFeatures
 	#print('T0: ',T0)
+	i = 0
 	for partNo in range(partCount):
+		i = i+1
+		#print('i: ',i)
 		T=2*numFeatures
 		curPar = population[partNo].copy()  
 		curAcc = accList[partNo].copy()  
@@ -157,6 +161,7 @@ def SA(population,accList):
 					curPar=newPar.copy()
 					curAcc=newAcc
 			T=int(T*0.7)
+			#print('one_count: ', onecount(curPar))
 		#print('bestAcc: ',bestAcc)
 		#print('Par:',partNo, 'newAcc:',bestAcc, 'newFeat:', onecount(bestPar), 'fitness_check: ', fitness(bestPar))
 		population[partNo]=bestPar.copy() 
@@ -260,14 +265,15 @@ best_no_features = -1
 accuracy_list = []
             
 
-data = pd.read_csv('/content/drive/MyDrive/feature_extraced_savee_dataset.csv')
-label = pd.read_csv(''/content/drive/MyDrive/class.csv')
+data = pd.read_csv('/content/drive/MyDrive/Dataset (3).csv')
+label = pd.read_csv('/content/drive/MyDrive/class.csv')
 data = np.asarray(data)
-label = label['Class']
+label = label['class']
 label = np.asarray(label)
 (a,b)=np.shape(data)
 print(a,b)
 dimension = np.shape(data)[1] #particle dimension
+
 
 #===============================================================================================================
 from numpy import array
@@ -283,6 +289,7 @@ cross = 5
 test_size = (1/cross)
 trainX, testX, trainy, testy = train_test_split(data, label,stratify=label ,test_size=test_size)
 '''
+best_solution_list = []
 for train_index, test_index in kfold.split(data):
     trainX,  trainy= np.asarray(data[train_index]), np.asarray(label[train_index])
     testX, testy  = np.asarray(data[test_index]), np.asarray(label[test_index])
@@ -302,54 +309,38 @@ for train_index, test_index in kfold.split(data):
       for partCount in partCountAll:
         count=0
         for max_iter in max_iterAll:
-          #print("\nFold: {}  ".format(f+1))     
+          print(max_iter)
           start_time = datetime.now()
-          population = initialize(partCount,dimension)				
-          [eqPool,population] = EO_SA(population,poolSize,max_iter,partCount,dimension)		
-          # print(eqPool)
+          population = initialize(partCount,dimension)
+          #print('population: ', population)
+          [eqPool,population] = EO_SA(population,poolSize,max_iter,partCount,dimension)	
           time_required = datetime.now() - start_time
-
-          # pyplot.plot(x_axis,y_axis)
-          # pyplot.xlim(0,max_iter)
-          # pyplot.ylim(max(0,min(y_axis)-0.1),min(max(y_axis)+0.1,1))
-          # pyplot.show()
-
-
           output = eqPool[0].copy()
-          # print(output)
-          #test accuracy
+          #print('output: ',output)
           cols = np.flatnonzero(output)
-          #print(cols)
+          #print('cols: ',cols)
           X_test = testX[:,cols]
           X_train = trainX[:,cols]
-          #print(np.shape(feature))
-
-          # clf = RandomForestClassifier(n_estimators=300)
           clf=KNeighborsClassifier(n_neighbors=5)
-          #clf=MLPClassifier( alpha=0.001, max_iter=2000) #hidden_layer_sizes=(1000,500,100 ),
           clf.fit(X_train,trainy)
           val=clf.score(X_test, testy )
-          accuracy_list.append(val)
+          if len(best_solution_list)<10:
+            best_solution_list.append(output)     
+            accuracy_list.append(val)  
+            accuracy_list.sort()
+          elif (val>accuracy_list[0] and accuracy_list.count(val)<=0):
+            best_solution_list.append(output)     
+            accuracy_list.append(val)  
+            accuracy_list.sort()   
+          best_solution_df = pd.DataFrame(best_solution_list)
+          best_solution_df.to_csv('/content/drive/MyDrive/BestPopulation.csv')        
+          
           if val>best_accuracy:
             best_accuracy = val
             best_no_features = onecount(output)
-          #average_accuracy += val
-          # if ( val == best_accuracy[0,count] ) and ( onecount(output) < best_no_features[0,count] ):
-          # 	best_accuracy[0,count] = val
-          # 	best_no_features[0,count] = onecount( output )
-          # 	#best_time_req[0,count] = time_required
-          # 	best_whole_accuracy = whole_accuracy
-            
-          # if val > best_accuracy[0,count] :
-          # 	best_accuracy[0,count] = val
-          # 	best_no_features[0,count] = onecount( output )
-          # 	#best_time_req[0,count] = time_required
-          # 	best_whole_accuracy = whole_accuracy
-
-          # print('best: ',best_accuracy[0,count], best_no_features[0,count])
-          # print('avg: ',average_accuracy/10)
-          # print("count:",count,"%.2f" % (100*best_accuracy[0,count]),best_no_features[0,count])
           count=count+1
+          
+
     f+=1
 
 '''    

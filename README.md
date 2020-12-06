@@ -8,9 +8,9 @@ are optimized by using the proposed CEOAS algorithm.
 The file feature extraction.py contains the code for feature extraction using LPC and LPCC. 
 For an example SAVEE_FEATURE_EXTRACTION.csv file contains the extracted features of SAVEE dataset having dimension of 480 X 730. 
 The function readWavFile(wav) will read the .wav files. 
-The folder should be in a certain format to read all these files. Next work is generation of clusters where no. of population is 15 and no of cluster center is 5. 
-After execution of this stage, one CSV is generated which is having a dimension of 5 X 730. 
-We will run the code twice and get two CSV files. The both the CSV files will work as the initialized population for both the feature selection algorithms ASO and EO.
+The folder should be in a certain format to read all these files. Next work is generation of clusters where two parameters, number of initial of population is set to 15 and the no of cluster centers is chosen as 5. This results 5 binarized standard solution vectors which are to be fed to further optimization algorithm.   
+
+Thus both ASO and EO are fed with clustering-based population with number of clusters equals to 5, for each case. ASO and EO further optimize their respective clustering-based population. 
 After execution of this stage we have to note the top twenty solutions with the accuracies for both the optimization algorithms and save them to a CSV file.
 We have uploaded two CSV files named as BestPopulationEO.csv and BestPopulationASO.csv, where both the optimized best population is stored. 
 Finally the CSV file having the dimension of 40 X 730 will enter into the AWCM part and optimal solution will be obtained.

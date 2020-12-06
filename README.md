@@ -6,7 +6,7 @@ Here, the combination of Linear Predictive Coding (LPC) and Linear Prediction Ce
 are optimized by using the proposed CEOAS algorithm.
 
 The file feature extraction.py contains the code for feature extraction using LPC and LPCC. 
-For an example Feature_extracted_savee_dataset.csv file contains the extracted features of SAVEE dataset having dimension of 480 X 959. 
+For an example SAVEE_FEATURE_EXTRACTION.csv file contains the extracted features of SAVEE dataset having dimension of 480 X 959. 
 The function readWavFile(wav) will read the .wav files. 
 The folder should be in a certain format to read all these files. Next work is generation of clusters where no. of population is 20 and no of cluster center is 5. 
 After execution of this stage, one CSV is generated which is having a dimension of 5 x 959. 

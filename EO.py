@@ -324,7 +324,7 @@ for train_index, test_index in kfold.split(data):
           clf=KNeighborsClassifier(n_neighbors=5)
           clf.fit(X_train,trainy)
           val=clf.score(X_test, testy )
-          if len(best_solution_list)<10:
+          if len(best_solution_list)<20:
             best_solution_list.append(output)     
             accuracy_list.append(val)  
             accuracy_list.sort()
